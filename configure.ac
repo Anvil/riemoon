@@ -27,6 +27,7 @@ PKG_CHECK_MODULES(LUA, lua5.3,,[
  PKG_CHECK_MODULES(LUA, lua5.2,,[
   PKG_CHECK_MODULES(LUA, lua5.1,,[
    PKG_CHECK_MODULES(LUA, luajit,,[
+    PKG_CHECK_MODULES(LUA, lua,,[
    AC_MSG_ERROR([Package requirements (lua) were not met:
 
 No package 'lua5.3', 'lua5.2', 'lua5.1' or 'luajit' found.
@@ -37,7 +38,8 @@ installed software in a non-standard prefix.
 Alternatively, you may set the environment variables LUA_CFLAGS
 and LUA_LIBS to avoid the need to call pkg-config.
 See the pkg-config man page for more details.])
-   ])]
+    ])]
+   )]
   )]
  )]
 )
