@@ -230,7 +230,7 @@ riemoon_buffer_destroy (lua_State *l)
   riemoon_buffer_t *rbuf;
   rbuf = (riemoon_buffer_t *)luaL_checkudata(l, 1, "Riemoon.Buffer");
   free(rbuf->buffer);
-  return 0
+  return 0;
 }
 
 static int
@@ -551,7 +551,7 @@ luaopen_riemoon (lua_State *l)
   lua_pushcfunction (l, riemoon_buffer_destroy);
   lua_settable (l, -3);
 
-  lua_pop (l, 1)
+  lua_pop (l, 1);
 
   luaL_newmetatable (l, "Riemoon.Client");
   lua_pushvalue (l, -1);
