@@ -15,6 +15,7 @@
  * License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdlib.h>
 #include <riemann/riemann-client.h>
 #include <string.h>
 
@@ -197,6 +198,7 @@ riemoon_buffer_create (lua_State *l)
   riemann_message_t *message;
   uint8_t *buffer;
   int count;
+  size_t len;
   riemoon_buffer_t *rbuf;
 
   count = lua_gettop (l);
@@ -210,7 +212,7 @@ riemoon_buffer_create (lua_State *l)
     for (; count > 0 ; count--)
       {
 	riemann_event_t *event;
-	luaL_checktype (l, count, LUA_TABLE);
+	luaL_checktype (l, count, LUA_TTABLE);
 	event = _riemoon_event_create(l);
 	riemann_message_append_events (message, event, NULL);
 
