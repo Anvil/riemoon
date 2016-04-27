@@ -204,7 +204,7 @@ riemoon_buffer_create (lua_State *l)
   count = lua_gettop (l);
 
   luaL_setmetatable(l, "Riemoon.Buffer");
-  rbuf = (riemoon_buffer_t *)lua_newuserdata (l, sizeof(*riemoon_buffer_t));
+  rbuf = (riemoon_buffer_t *)lua_newuserdata (l, sizeof(riemoon_buffer_t));
   rbuf->buffer = NULL;
 
   if (count > 0) {
@@ -227,8 +227,8 @@ riemoon_buffer_create (lua_State *l)
 static int
 riemoon_buffer_destroy (lua_State *l)
 {
-  riemonn_buffer_t *rbuf;
-  rbuf = (riemonn_buffer_t *)luaL_checkudata(l, 1, "Riemonn.Buffer");
+  riemoon_buffer_t *rbuf;
+  rbuf = (riemoon_buffer_t *)luaL_checkudata(l, 1, "Riemoon.Buffer");
   free(rbuf->buffer);
   return 0
 }
