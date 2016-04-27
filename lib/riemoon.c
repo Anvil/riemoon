@@ -223,6 +223,15 @@ riemoon_buffer_create (lua_State *l)
 }
 
 static int
+riemoon_buffer_destroy (lua_State *l)
+{
+  riemonn_buffer_t *rbuf;
+  rbuf = (riemonn_buffer_t *)luaL_checkudata(l, 1, "Riemonn.Buffer");
+  free(rbuf->buffer);
+  return 0
+}
+
+static int
 riemoon_client_send (lua_State *l)
 {
   riemoon_client_t *client;
@@ -494,6 +503,7 @@ luaopen_riemoon (lua_State *l)
 {
   luaL_Reg functions[] = {
     {"connect", riemoon_connect},
+    {"buffer", riemoon_buffer_create},
     {NULL, NULL}
   };
   luaL_Reg methods[] = {
@@ -531,6 +541,15 @@ luaopen_riemoon (lua_State *l)
   lua_settable (l, -3);
 
   lua_pop (l, 1);
+
+  luaL_newlib (l, empty_functions);
+  luaL_newmetatable (l, "Riemann.Buffer");
+
+  lua_pushstring (l, "__gc");
+  lua_pushcfunction (l, riemoon_buffer_destroy);
+  lua_settable (l, -3);
+
+  lua_pop (l, 1)
 
   luaL_newmetatable (l, "Riemoon.Client");
   lua_pushvalue (l, -1);
