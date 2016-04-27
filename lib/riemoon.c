@@ -196,26 +196,29 @@ riemoon_buffer_create (lua_State *l)
 {
   riemann_message_t *message;
   uint8_t *buffer;
-  int i, count;
+  int count;
   riemoon_buffer_t *rbuf;
 
+  count = lua_gettop (l);
+
   luaL_setmetatable(l, "Riemoon.Buffer");
+  rbuf = (riemoon_buffer_t *)lua_newuserdata (l, sizeof(*riemoon_buffer_t));
+  rbuf->buffer = NULL;
 
-  message = riemann_message_new ();
-  count = lua_gettop(l);
-  for ()
-    {
-      riemann_event_t *event;
-      luaL_checktype (l, 1, LUA_TABLE);
-      // event = _riemoon_event_create(l);
-      riemann_message_append_events (message, event, NULL);
+  if (count > 0) {
+    message = riemann_message_new ();
+    for (; count > 0 ; count--)
+      {
+	riemann_event_t *event;
+	luaL_checktype (l, count, LUA_TABLE);
+	event = _riemoon_event_create(l);
+	riemann_message_append_events (message, event, NULL);
 
-      lua_pop (l, 1);
-    }
-
-  rbuf = (riemoon_buffer_t *)lua_newuserdata(l, sizeof(*riemoon_buffer_t));
-  rbuf->buffer = riemann_message_to_buffer(message, &len);
-  luaL_setmetatable(l, "Riemoon.Buffer");
+	lua_pop (l, 1);
+      }
+    rbuf->buffer = riemann_message_to_buffer (message, &len);
+  }
+  luaL_setmetatable (l, "Riemoon.Buffer");
   return 1;
 }
 
