@@ -228,8 +228,10 @@ static int
 riemoon_buffer_destroy (lua_State *l)
 {
   riemoon_buffer_t *rbuf;
+
   rbuf = (riemoon_buffer_t *)luaL_checkudata(l, 1, "Riemoon.Buffer");
   free(rbuf->buffer);
+  rbuf->buffer = NULL;
   return 0;
 }
 
